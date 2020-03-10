@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.application.backend.data.entity.Employee;
-import com.example.application.backend.data.entity.Notification;
+import com.example.application.backend.data.entity.CSPNotification;
 import com.example.application.backend.data.models.EmployeeDTO;
 import com.example.application.backend.data.models.CSPNotificationDTO;
 import com.example.application.backend.repository.EmployeeRepo;
@@ -31,7 +31,7 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
     this.modelMapper = modelMapper;
   }
 
-
+//  getAllEmployees should be in Employees service, but for the demo its here.
   @Override
   public List<EmployeeDTO> getAllEmployees() {
 
@@ -57,19 +57,19 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
                                                String topic,
                                                String content) {
 
-    Employee receiver =
+    Employee notificationReceiver =
         this.employeeRepo
             .findByEmail(receiverEmail)
-            .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
+            .orElseThrow(() -> new IllegalArgumentException("User does not exist!"));
 
-    Notification notification = new Notification();
-    notification.setContent(content);
-    notification.setTopic(topic);
-    notification.setTime(new Timestamp(new Date().getTime()));
-    notification.setEmployee(receiver);
+    CSPNotification CSPNotification = new CSPNotification();
+    CSPNotification.setContent(content);
+    CSPNotification.setTopic(topic);
+    CSPNotification.setTime(new Timestamp(new Date().getTime()));
+    CSPNotification.setEmployee(notificationReceiver);
 
     return this.modelMapper.map(
-        this.notificationRepo.saveAndFlush(notification), CSPNotificationDTO.class);
+        this.notificationRepo.saveAndFlush(CSPNotification), CSPNotificationDTO.class);
   }
 
 }

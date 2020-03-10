@@ -25,111 +25,116 @@ import org.springframework.beans.factory.annotation.Autowired;
 @CssImport("styles/views/masterdetail/master-detail-view.css")
 public class MasterDetailView extends Div implements AfterNavigationObserver {
 
-    private final CSPNotificationService notificationService;
+  private final CSPNotificationService notificationService;
 
-    private Grid<EmployeeDTO> employees;
+  private Grid<EmployeeDTO> employees;
 
-    private TextField email = new TextField();
-    private TextField notificationContent = new TextField();
+  private TextField email = new TextField();
+  private TextField notificationTopic = new TextField();
+  private TextField notificationContent = new TextField();
 
-    private Button cancel = new Button("Cancel");
-    private Button send = new Button("Send");
+  private Button cancel = new Button("Cancel");
+  private Button send = new Button("Send");
 
-    private Binder<EmployeeDTO> binder;
+  private Binder<EmployeeDTO> binder;
 
-    @Autowired
-    public MasterDetailView(CSPNotificationService notificationService) {
-        this.notificationService = notificationService;
+  @Autowired
+  public MasterDetailView(CSPNotificationService notificationService) {
+    this.notificationService = notificationService;
 
-        setId("detail-view");
-        // Configure Grid
-        employees = new Grid<>();
-        employees.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        employees.setHeightFull();
-        employees.addColumn(EmployeeDTO::getFirstname).setHeader("First name");
-        employees.addColumn(EmployeeDTO::getLastname).setHeader("Last name");
-        employees.addColumn(EmployeeDTO::getEmail).setHeader("Email");
+    setId("detail-view");
+    // Configure Grid
+    employees = new Grid<>();
+    employees.addThemeVariants(GridVariant.LUMO_NO_BORDER);
+    employees.setHeightFull();
+    employees.addColumn(EmployeeDTO::getFirstname).setHeader("First name");
+    employees.addColumn(EmployeeDTO::getLastname).setHeader("Last name");
+    employees.addColumn(EmployeeDTO::getEmail).setHeader("Email");
 
-        //when a row is selected or deselected, populate form
-        employees.asSingleSelect().addValueChangeListener(event -> populateForm(event.getValue()));
+    //when a row is selected or deselected, populate form
+    employees.asSingleSelect().addValueChangeListener(event -> populateForm(event.getValue()));
 
-        // Configure Form
-        binder = new Binder<>(EmployeeDTO.class);
+    // Configure Form
+    binder = new Binder<>(EmployeeDTO.class);
 
-        // Bind fields. This where you'd define e.g. validation rules
+    // Bind fields. This where you'd define e.g. validation rules
 
-        binder.bindInstanceFields(this);
-        // note that password field isn't bound since that property doesn't exist in
-        // Employee
+    binder.bindInstanceFields(this);
+    // note that password field isn't bound since that property doesn't exist in
+    // Employee
 
-        // the grid valueChangeEvent will clear the form too
-        cancel.addClickListener(e -> employees.asSingleSelect().clear());
+    // the grid valueChangeEvent will clear the form too
+    cancel.addClickListener(e -> employees.asSingleSelect().clear());
 
-        send.addClickListener(e -> {
+    send.addClickListener(e -> {
 //            Notification.show("Not implemented");
 
-            CSPNotificationDTO notificationDTO =
-                this.notificationService.createNotification(email.getValue(), notificationContent.getValue());
-        });
+      CSPNotificationDTO notificationDTO =
+          this.notificationService.createNotification(
+              email.getValue(),
+              notificationTopic.getValue(),
+              notificationContent.getValue());
+    });
 
-        SplitLayout splitLayout = new SplitLayout();
-        splitLayout.setSizeFull();
+    SplitLayout splitLayout = new SplitLayout();
+    splitLayout.setSizeFull();
 
-        createGridLayout(splitLayout);
-        createEditorLayout(splitLayout);
+    createGridLayout(splitLayout);
+    createEditorLayout(splitLayout);
 
-        add(splitLayout);
-    }
+    add(splitLayout);
+  }
 
-    private void createEditorLayout(SplitLayout splitLayout) {
-        Div editorDiv = new Div();
-        editorDiv.setId("editor-layout");
-        FormLayout formLayout = new FormLayout();
-        addFormItem(editorDiv, formLayout, email, "Email");
-        addFormItem(editorDiv, formLayout, notificationContent, "Content");
-        createButtonLayout(editorDiv);
-        splitLayout.addToSecondary(editorDiv);
-    }
+  private void createEditorLayout(SplitLayout splitLayout) {
+    Div editorDiv = new Div();
+    editorDiv.setId("editor-layout");
+    FormLayout formLayout = new FormLayout();
+    addFormItem(editorDiv, formLayout, email, "Email");
+    addFormItem(editorDiv, formLayout, notificationContent, "Content");
+    createButtonLayout(editorDiv);
+    splitLayout.addToSecondary(editorDiv);
+  }
 
-    private void createButtonLayout(Div editorDiv) {
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.setId("button-layout");
-        buttonLayout.setWidthFull();
-        buttonLayout.setSpacing(true);
-        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        send.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(cancel, send);
-        editorDiv.add(buttonLayout);
-    }
+  private void createButtonLayout(Div editorDiv) {
+    HorizontalLayout buttonLayout = new HorizontalLayout();
+    buttonLayout.setId("button-layout");
+    buttonLayout.setWidthFull();
+    buttonLayout.setSpacing(true);
+    cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+    send.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+    buttonLayout.add(cancel, send);
+    editorDiv.add(buttonLayout);
+  }
 
-    private void createGridLayout(SplitLayout splitLayout) {
-        Div wrapper = new Div();
-        wrapper.setId("wrapper");
-        wrapper.setWidthFull();
-        splitLayout.addToPrimary(wrapper);
-        wrapper.add(employees);
-    }
+  private void createGridLayout(SplitLayout splitLayout) {
+    Div wrapper = new Div();
+    wrapper.setId("wrapper");
+    wrapper.setWidthFull();
+    splitLayout.addToPrimary(wrapper);
+    wrapper.add(employees);
+  }
 
-    private void addFormItem(Div wrapper, FormLayout formLayout,
-            AbstractField field, String fieldName) {
-        formLayout.addFormItem(field, fieldName);
-        wrapper.add(formLayout);
-        field.getElement().getClassList().add("full-width");
-    }
+  private void addFormItem(Div wrapper, FormLayout formLayout,
+                           AbstractField field, String fieldName) {
+    formLayout.addFormItem(field, fieldName);
+    wrapper.add(formLayout);
+    field.getElement().getClassList().add("full-width");
+  }
 
-    @Override
-    public void afterNavigation(AfterNavigationEvent event) {
+  @Override
+  public void afterNavigation(AfterNavigationEvent event) {
 
-        // Lazy init of the grid items, happens only when we are sure the view will be
-        // shown to the user
-        employees.setItems(notificationService.getAllEmployees());
-    }
+    // Lazy init of the grid items, happens only when we are sure the view will be
+    // shown to the user
+    employees.setItems(notificationService.getAllEmployees());
+  }
 
-    private void populateForm(EmployeeDTO value) {
-        // Value can be null as well, that clears the form
-        binder.readBean(value);
+  private void populateForm(EmployeeDTO value) {
+    // Value can be null as well, that clears the form
+    binder.readBean(value);
 /*
         // The password field isn't bound through the binder, so handle that
         password.setValue("");*/
-    }
+  }
+
 }

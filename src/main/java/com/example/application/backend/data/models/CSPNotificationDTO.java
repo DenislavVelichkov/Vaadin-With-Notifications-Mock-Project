@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class CSPNotificationDTO {
 
   private Long id;
-  private String content;
   private String topic;
+  private String content;
   private Timestamp time;
   private boolean seen;
 

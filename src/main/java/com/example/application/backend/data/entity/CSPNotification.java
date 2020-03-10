@@ -6,17 +6,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "notifications")
-public class Notification implements Serializable {
+public class CSPNotification implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @Column
-  private String content;
+  private String topic;
 
   @Column
-  private String topic;
+  private String content;
+
 
   @Column
   private Timestamp time;
@@ -25,7 +26,7 @@ public class Notification implements Serializable {
   private boolean seen = false;
 
   @ManyToOne(
-      targetEntity = Notification.class,
+      targetEntity = CSPNotification.class,
       cascade = CascadeType.PERSIST)
   @JoinColumn(
       name = "user_id",
@@ -33,7 +34,7 @@ public class Notification implements Serializable {
       nullable = false, unique = true)
   Employee employee;
 
-  public Notification() {
+  public CSPNotification() {
   }
 
   public Long getId() {
