@@ -19,7 +19,7 @@ public class ApplicationBeanConfiguration {
 
   private static void initMapper(ModelMapper modelMapper) {
       modelMapper.getConfiguration()
-                 .setMatchingStrategy(MatchingStrategies.STRICT)
+                 .setMatchingStrategy(MatchingStrategies.STANDARD)
                  .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                  .setSkipNullEnabled(true);
   }
