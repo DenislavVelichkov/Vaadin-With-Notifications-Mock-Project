@@ -1,0 +1,86 @@
+package com.example.application.backend.data.entity;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "notifications")
+public class Notification implements Serializable {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @Column
+  private String content;
+
+  @Column
+  private String topic;
+
+  @Column
+  private Timestamp time;
+
+  @Column
+  private boolean seen = false;
+
+  @ManyToOne(
+      targetEntity = Notification.class,
+      cascade = CascadeType.PERSIST)
+  @JoinColumn(
+      name = "user_id",
+      referencedColumnName = "id",
+      nullable = false, unique = true)
+  Employee employee;
+
+  public Notification() {
+  }
+
+  public Long getId() {
+    return this.id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getContent() {
+    return this.content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Employee getEmployee() {
+    return this.employee;
+  }
+
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
+  }
+
+  public String getTopic() {
+    return this.topic;
+  }
+
+  public void setTopic(String topic) {
+    this.topic = topic;
+  }
+
+  public Timestamp getTime() {
+    return this.time;
+  }
+
+  public void setTime(Timestamp time) {
+    this.time = time;
+  }
+
+  public boolean isSeen() {
+    return this.seen;
+  }
+
+  public void setSeen(boolean seen) {
+    this.seen = seen;
+  }
+}
