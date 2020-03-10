@@ -1,0 +1,26 @@
+ALTER TABLE `notification_test_db`.`employees` 
+CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT ;
+
+INSERT INTO `employees`(first_name, last_name, email, title) VALUES 
+("Bowena", "Leeming", "rleeming0@bbc.co.uk", "Food Chemist"),
+("Alvinia", "Delong", "adelong1@altervista.org", "Recruiting Manager"),
+("Leodora", "Burry", "lburry2@example.com", "Food Chemist"),email
+("Karen", "Oaten", "koaten3@ihg.com", "VP Sales"),
+("Mariele", "Huke", "mhuke4@washingtonpost.com", "Research Assistant IV"),
+("Grata", "Widdowes", "gwiddowes5@cargocollective.com", "Actuary"),
+("Donna", "Roadknight", "droadknight6@apache.org", "Mechanical Systems Engineer"),
+("Tommi", "Nowland", "tnowland7@biblegateway.com", "Senior Developer"),
+("Tonya", "Teresia", "tteresia8@boston.com", "Assistant Manager"),
+("Steffen", "Yon", "syon9@ocn.ne.jp", "Senior Sales Associate"),
+("Consalve", "Willes", "cwillesa@linkedin.com", "Programmer I"),
+("Jeanelle", "Lambertz", "jlambertzb@nymag.com", "Operator"),
+("Odelia", "Loker", "olokerc@gov.uk", "Developer I"),
+("Briano", "Shawell", "bshawelld@posterous.com", "Research Assistant IV"),
+("Tarrance", "Mainston", "tmainstone@cmu.edu", "Research Nurse"),
+("Torrence", "Gehring", "tgehringf@a8.net", "Geological Engineer"),
+("Augie", "Pionter", "apionterg@ehow.com", "Senior Financial Analyst"),
+("Marillin", "Aveson", "mavesonh@shop-pro.jp", "Technical Writer"),
+("Jacquelyn", "Moreby", "jmorebyi@slashdot.org", "Executive Secretary"),
+("Glenn", "Bangley", "gbangleyj@prlog.org", "Account Executive"),
+("Isidoro", "Glave", "iglavek@tamu.edu", "Compensation Analyst"),
+("Cchaddie", "Spatarul", "cspatarull@sun.com", "Business Systems Development Analyst");
