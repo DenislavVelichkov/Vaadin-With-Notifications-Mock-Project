@@ -3,15 +3,12 @@ package com.example.application.backend.data.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "employees")
-public class Employee implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Employee extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstname;
@@ -25,16 +22,14 @@ public class Employee implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @OneToOne
+    @JoinColumn(
+        name = "user_id",
+        referencedColumnName = "id",
+        nullable = false, unique = true)
+    private User userCredentials;
 
     public Employee() {
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstname() {
@@ -69,20 +64,28 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
+    public User getUserCredentials() {
+        return this.userCredentials;
+    }
+
+    public void setUserCredentials(User userCredentials) {
+        this.userCredentials = userCredentials;
+    }
+
     @Override
     public int hashCode() {
 
-        if (id == null) {
+        if (super.getId() == null) {
             return super.hashCode();
         } else {
-            return id.intValue();
+            return super.getId().intValue();
         }
     }
 
     @Override
     public boolean equals(Object obj) {
 
-        if (obj == null || id == null) {
+        if (obj == null || super.getId() == null) {
             return false;
         }
 
@@ -90,7 +93,7 @@ public class Employee implements Serializable {
             return false;
         }
 
-        if (id.equals(((Employee) obj).id)) {
+        if (super.getId().equals(((Employee) obj).getId())) {
             return true;
         }
 

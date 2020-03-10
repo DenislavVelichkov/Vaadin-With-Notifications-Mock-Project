@@ -9,8 +9,8 @@ import com.example.application.backend.data.entity.Employee;
 import com.example.application.backend.data.entity.CSPNotification;
 import com.example.application.backend.data.models.EmployeeDTO;
 import com.example.application.backend.data.models.CSPNotificationDTO;
-import com.example.application.backend.repository.EmployeeRepo;
-import com.example.application.backend.repository.NotificationRepo;
+import com.example.application.backend.repository.EmployeesRepository;
+import com.example.application.backend.repository.NotificationsRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class CSPNotificationServiceImpl implements CSPNotificationService {
 
-  private final EmployeeRepo employeeRepo;
-  private final NotificationRepo notificationRepo;
+  private final EmployeesRepository employeesRepository;
+  private final NotificationsRepository notificationsRepository;
   private final ModelMapper modelMapper;
 
   @Autowired
-  public CSPNotificationServiceImpl(EmployeeRepo employeeRepo,
-                                    NotificationRepo notificationRepo,
+  public CSPNotificationServiceImpl(EmployeesRepository employeesRepository,
+                                    NotificationsRepository notificationsRepository,
                                     ModelMapper modelMapper) {
-    this.employeeRepo = employeeRepo;
-    this.notificationRepo = notificationRepo;
+    this.employeesRepository = employeesRepository;
+    this.notificationsRepository = notificationsRepository;
     this.modelMapper = modelMapper;
   }
 
@@ -35,7 +35,7 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
   @Override
   public List<EmployeeDTO> getAllEmployees() {
 
-    return this.employeeRepo
+    return this.employeesRepository
         .findAll()
         .stream()
         .map(e -> this.modelMapper.map(e, EmployeeDTO.class))
@@ -45,7 +45,7 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
   @Override
   public List<CSPNotificationDTO> getAllNotifications() {
 
-    return this.notificationRepo
+    return this.notificationsRepository
         .findAll()
         .stream()
         .map(n -> this.modelMapper.map(n, CSPNotificationDTO.class))
@@ -58,7 +58,7 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
                                                String content) {
 
     Employee notificationReceiver =
-        this.employeeRepo
+        this.employeesRepository
             .findByEmail(receiverEmail)
             .orElseThrow(() -> new IllegalArgumentException("User does not exist!"));
 
@@ -69,7 +69,7 @@ public class CSPNotificationServiceImpl implements CSPNotificationService {
     CSPNotification.setEmployee(notificationReceiver);
 
     return this.modelMapper.map(
-        this.notificationRepo.saveAndFlush(CSPNotification), CSPNotificationDTO.class);
+        this.notificationsRepository.saveAndFlush(CSPNotification), CSPNotificationDTO.class);
   }
 
 }

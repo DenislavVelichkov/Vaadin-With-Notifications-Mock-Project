@@ -6,11 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "notifications")
-public class CSPNotification implements Serializable {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+public class CSPNotification extends BaseEntity {
 
   @Column
   private String topic;
@@ -35,14 +31,6 @@ public class CSPNotification implements Serializable {
   Employee employee;
 
   public CSPNotification() {
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getContent() {

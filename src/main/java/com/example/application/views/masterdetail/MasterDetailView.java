@@ -68,6 +68,7 @@ public class MasterDetailView extends Div implements AfterNavigationObserver {
 
     send.addClickListener(e -> {
 //            Notification.show("Not implemented");
+// TODO: 3/10/2020 Implement "Send Notifications"
 
       CSPNotificationDTO notificationDTO =
           this.notificationService.createNotification(
@@ -123,7 +124,6 @@ public class MasterDetailView extends Div implements AfterNavigationObserver {
 
   @Override
   public void afterNavigation(AfterNavigationEvent event) {
-
     // Lazy init of the grid items, happens only when we are sure the view will be
     // shown to the user
     employees.setItems(notificationService.getAllEmployees());
@@ -132,9 +132,6 @@ public class MasterDetailView extends Div implements AfterNavigationObserver {
   private void populateForm(EmployeeDTO value) {
     // Value can be null as well, that clears the form
     binder.readBean(value);
-/*
-        // The password field isn't bound through the binder, so handle that
-        password.setValue("");*/
   }
 
 }
