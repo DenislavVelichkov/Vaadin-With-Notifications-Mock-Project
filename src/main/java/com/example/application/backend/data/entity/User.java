@@ -1,13 +1,8 @@
 package com.example.application.backend.data.entity;
 
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity

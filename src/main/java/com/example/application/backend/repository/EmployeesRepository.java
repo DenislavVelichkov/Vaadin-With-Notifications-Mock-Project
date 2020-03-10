@@ -1,6 +1,5 @@
 package com.example.application.backend.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.example.application.backend.data.entity.Employee;

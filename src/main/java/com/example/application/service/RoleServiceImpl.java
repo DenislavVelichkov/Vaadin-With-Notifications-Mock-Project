@@ -3,7 +3,6 @@ package com.example.application.service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 import com.example.application.backend.common.Authorities;
 import com.example.application.backend.data.entity.Role;
 import com.example.application.backend.data.models.RoleDTO;

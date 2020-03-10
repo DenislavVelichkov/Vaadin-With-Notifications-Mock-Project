@@ -1,10 +1,6 @@
 package com.example.application.backend.data.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.databind.ser.Serializers;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "employees")
