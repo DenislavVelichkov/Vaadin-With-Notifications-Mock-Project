@@ -3,7 +3,7 @@ package com.example.application.views.cardlist;
 import java.util.Arrays;
 import java.util.List;
 
-import com.example.application.views.main.MainView;
+import com.example.application.views.main.HomeView;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
@@ -20,7 +20,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 
-@Route(value = "card-list", layout = MainView.class)
+@Route(value = "card-list", layout = HomeView.class)
 @PageTitle("Card List")
 @CssImport(value = "styles/views/cardlist/card-list-view.css", include = "lumo-badge")
 @JsModule("@vaadin/vaadin-lumo-styles/badge.js")

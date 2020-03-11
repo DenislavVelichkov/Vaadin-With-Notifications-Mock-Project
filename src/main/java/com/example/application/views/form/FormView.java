@@ -1,7 +1,7 @@
 package com.example.application.views.form;
 
 import com.example.application.backend.data.entity.Employee;
-import com.example.application.views.main.MainView;
+import com.example.application.views.main.HomeView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -19,7 +19,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "form", layout = MainView.class)
+@Route(value = "form", layout = HomeView.class)
 @PageTitle("Form")
 @CssImport("styles/views/form/form-view.css")
 public class FormView extends Div {

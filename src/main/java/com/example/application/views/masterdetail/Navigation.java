@@ -3,7 +3,7 @@ package com.example.application.views.masterdetail;
 import com.example.application.backend.data.models.CSPNotificationDTO;
 import com.example.application.backend.data.models.EmployeeDTO;
 import com.example.application.service.CSPNotificationService;
-import com.example.application.views.main.MainView;
+import com.example.application.views.main.HomeView;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -19,11 +19,10 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "home", layout = MainView.class)
-@RouteAlias(value = "", layout = MainView.class)
+
 @PageTitle("Home")
 @CssImport("styles/views/masterdetail/master-detail-view.css")
-public class MasterDetailView extends Div implements AfterNavigationObserver {
+public class Navigation extends Div implements AfterNavigationObserver {
 
   private final CSPNotificationService notificationService;
 
@@ -39,7 +38,7 @@ public class MasterDetailView extends Div implements AfterNavigationObserver {
   private Binder<EmployeeDTO> binder;
 
   @Autowired
-  public MasterDetailView(CSPNotificationService notificationService) {
+  public Navigation(CSPNotificationService notificationService) {
     this.notificationService = notificationService;
 
     setId("detail-view");
@@ -133,5 +132,4 @@ public class MasterDetailView extends Div implements AfterNavigationObserver {
     // Value can be null as well, that clears the form
     binder.readBean(value);
   }
-
 }

@@ -12,4 +12,5 @@ public interface RoleService {
   Set<RoleDTO> findAllRoles();
 
   RoleDTO findByAuthority(Authorities authority);
+
 }

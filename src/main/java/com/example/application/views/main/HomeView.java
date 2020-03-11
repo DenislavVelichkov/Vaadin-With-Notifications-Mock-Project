@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.example.application.views.cardlist.CardListView;
 import com.example.application.views.form.FormView;
-import com.example.application.views.masterdetail.MasterDetailView;
+import com.example.application.views.masterdetail.Navigation;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -15,6 +15,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
@@ -24,14 +25,15 @@ import com.vaadin.flow.theme.lumo.Lumo;
 /**
  * The main view is a top-level placeholder for other views.
  */
+@Route(value = "home")
 @JsModule("./styles/shared-styles.js")
 @PWA(name = "vaadin-demo", shortName = "vaadin-demo")
 @Theme(value = Lumo.class, variant = Lumo.LIGHT)
-public class MainView extends AppLayout {
+public class HomeView extends AppLayout {
 
     private final Tabs menu;
 
-    public MainView() {
+    public HomeView() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, new DrawerToggle());
         menu = createMenuTabs();
@@ -49,7 +51,7 @@ public class MainView extends AppLayout {
 
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
-        tabs.add(createTab("Master-Detail", MasterDetailView.class));
+        tabs.add(createTab("Master-Detail", Navigation.class));
         tabs.add(createTab("Form", FormView.class));
         tabs.add(createTab("Card List", CardListView.class));
         return tabs.toArray(new Tab[tabs.size()]);
