@@ -1,7 +1,9 @@
 package com.example.application.service;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.application.backend.common.Authorities;
@@ -12,9 +14,11 @@ import com.example.application.backend.data.models.UserDTO;
 import com.example.application.backend.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -24,13 +28,13 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final RoleService roleService;
   private final ModelMapper modelMapper;
-  private final BCryptPasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired()
   public UserServiceImpl(UserRepository userRepository,
                          RoleService roleService,
                          ModelMapper modelMapper,
-                         BCryptPasswordEncoder passwordEncoder) {
+                         PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.roleService = roleService;
     this.modelMapper = modelMapper;
@@ -39,9 +43,22 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return this.userRepository
-        .findByEmail(email)
-        .orElseThrow(() -> new UsernameNotFoundException(ExceptionMessages.USERNAME_NOT_FOUND));
+//    return this.userRepository
+//        .findByEmail(email)
+//        .orElseThrow(() -> new UsernameNotFoundException(ExceptionMessages.USERNAME_NOT_FOUND));
+    Optional<User> user =
+        this.userRepository
+            .findByEmail(email);
+
+    if (user.isEmpty()) {
+      throw new UsernameNotFoundException("There is not such user!");
+    }
+
+    return new org.springframework.security.core.userdetails.User(
+        user.get().getEmail(),
+        user.get().getPassword(),
+        Collections.singleton(
+            new SimpleGrantedAuthority(user.get().getAuthorities().toString())));
   }
 
   @Override
@@ -61,6 +78,11 @@ public class UserServiceImpl implements UserService {
 
     User user = this.modelMapper.map(userDTO, User.class);
     this.modelMapper.validate();
+
+    String[] usernamePrep = userDTO.getEmail().split("@");
+
+    // TODO: 12/9/19 Implement random generated username;
+    user.setUsername(usernamePrep[0] + "." + usernamePrep[1]);
 
     Employee employeeProfile = new Employee();
     employeeProfile.setEmail(user.getEmail());

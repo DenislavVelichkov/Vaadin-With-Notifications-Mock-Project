@@ -1,21 +1,13 @@
 package com.example.application.backend.config.security;
 
-
-import java.nio.file.AccessDeniedException;
-
-import com.example.application.views.login.LoginView;
+import com.example.application.views.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
-import com.vaadin.flow.spring.annotation.SpringComponent;
+import org.springframework.stereotype.Component;
 
-/**
- * Adds before enter listener to check access to views.
- * Adds the Offline banner.
- * 
- */
-@SpringComponent
+@Component
 public class ConfigureUIServiceInitListener implements VaadinServiceInitListener {
 
 	@Override
@@ -26,20 +18,11 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
 		});
 	}
 
-	/**
-	 * Reroutes the user if she is not authorized to access the view. 
-	 *
-	 * @param event
-	 *            before navigation event with event details
-	 */
+
 	private void beforeEnter(BeforeEnterEvent event) {
-		final boolean accessGranted = SecurityUtils.isAccessGranted(event.getNavigationTarget());
-		if (!accessGranted) {
-			if (SecurityUtils.isUserLoggedIn()) {
-				event.rerouteToError(AccessDeniedException.class);
-			} else {
-				event.rerouteTo(LoginView.class);
-			}
+		if (!LoginView.class.equals(event.getNavigationTarget())
+		    && !SecurityUtils.isUserLoggedIn()) {
+			event.rerouteTo(LoginView.class);
 		}
 	}
 }

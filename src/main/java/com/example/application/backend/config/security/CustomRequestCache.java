@@ -1,9 +1,11 @@
 package com.example.application.backend.config.security;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 /**
@@ -15,7 +17,7 @@ class CustomRequestCache extends HttpSessionRequestCache {
 	 *
 	 * If the method is considered an internal request from the framework, we skip
 	 * saving it.
-	 * 
+	 *
 	 * @see SecurityUtils#isFrameworkInternalRequest(HttpServletRequest)
 	 */
 	@Override
@@ -24,5 +26,4 @@ class CustomRequestCache extends HttpSessionRequestCache {
 			super.saveRequest(request, response);
 		}
 	}
-
 }
