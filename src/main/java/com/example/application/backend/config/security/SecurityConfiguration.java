@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private static final String LOGIN_PROCESSING_URL = "/login";
   private static final String LOGIN_FAILURE_URL = "/login?error";
   private static final String LOGIN_URL = "/login";
-  private static final String LOGOUT_SUCCESS_URL = "/";
+  private static final String LOGOUT_SUCCESS_URL = "/login";
 
 
   private final UserDetailsService userService;
@@ -72,12 +72,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         "/frontend/**",
         "/webjars/**",
         "/frontend-es5/**", "/frontend-es6/**");
-  }
-
-  @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
   }
 
 }
