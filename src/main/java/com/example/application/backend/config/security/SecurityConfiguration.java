@@ -1,6 +1,9 @@
 package com.example.application.backend.config.security;
 
 
+import java.util.Arrays;
+
+import com.example.application.backend.common.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private static final String LOGIN_PROCESSING_URL = "/login_process";
+  private static final String LOGIN_PROCESSING_URL = "/login";
   private static final String LOGIN_FAILURE_URL = "/login?error";
   private static final String LOGIN_URL = "/login";
   private static final String LOGOUT_SUCCESS_URL = "/";
-  private static final String LOGIN_SUCCESS_URL = "/home";
-  private static final String LOGOUT_URL = "/logout";
+
 
   private final UserDetailsService userService;
   private final PasswordEncoder passwordEncoder;
@@ -47,26 +49,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .requestCache().requestCache(new CustomRequestCache())
         .and()
         .authorizeRequests()
-        .antMatchers("/login", "/register").permitAll()
-        .antMatchers("/VAADIN/**").permitAll()
+        .antMatchers("/register").permitAll()
         .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
         .anyRequest().authenticated()
         .and().formLogin()
-        .usernameParameter("email")
-        .passwordParameter("password")
+        .failureForwardUrl(LOGIN_FAILURE_URL)
         .loginPage(LOGIN_URL).permitAll()
         .loginProcessingUrl(LOGIN_PROCESSING_URL)
-        .defaultSuccessUrl(LOGIN_SUCCESS_URL)
-        .successForwardUrl(LOGIN_SUCCESS_URL)
-        .failureUrl(LOGIN_FAILURE_URL)
-        .and().logout().logoutUrl(LOGOUT_URL)
-        .logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+        .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers(
-
+        "/VAADIN/**",
         "/favicon.ico",
         "/robots.txt",
         "/manifest.webmanifest",

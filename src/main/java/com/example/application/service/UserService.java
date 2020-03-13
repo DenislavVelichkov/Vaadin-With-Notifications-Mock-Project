@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.application.backend.data.models.UserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
   void registerUser(UserDTO userDTO);
 

@@ -1,6 +1,5 @@
 package com.example.application.backend.config;
 
-import com.example.application.backend.config.security.CustomRequestCache;
 import com.example.application.backend.config.security.SecurityUtils;
 import com.example.application.backend.data.entity.User;
 import com.example.application.backend.data.models.UserDTO;
@@ -51,11 +50,6 @@ public class ApplicationBeanConfiguration {
   @Bean
   public SecurityUtils securityUtils() {
     return new SecurityUtils();
-  }
-
-  @Bean
-  public CustomRequestCache requestCache() { // (2)
-    return new CustomRequestCache();
   }
 
 }

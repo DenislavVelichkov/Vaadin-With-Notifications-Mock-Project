@@ -41,23 +41,6 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    Optional<User> user =
-        this.userRepository
-            .findByEmail(email);
-
-    if (user.isEmpty()) {
-      throw new UsernameNotFoundException("There is not such user!");
-    }
-
-    return new org.springframework.security.core.userdetails.User(
-        user.get().getEmail(),
-        user.get().getPassword(),
-        Collections.singleton(
-            new SimpleGrantedAuthority(user.get().getAuthorities().toString())));
-  }
-
-  @Override
   public void registerUser(UserDTO userDTO) {
     this.roleService.seedRolesInDb();
 
