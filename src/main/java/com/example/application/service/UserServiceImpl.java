@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +42,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//    return this.userRepository
-//        .findByEmail(email)
-//        .orElseThrow(() -> new UsernameNotFoundException(ExceptionMessages.USERNAME_NOT_FOUND));
     Optional<User> user =
         this.userRepository
             .findByEmail(email);
@@ -89,7 +85,8 @@ public class UserServiceImpl implements UserService {
     employeeProfile.setFirstname(user.getFirstName());
     employeeProfile.setLastname(user.getLastName());
     employeeProfile.setUserCredentials(user);
-// TODO: 3/10/2020 Implement Title of the employee
+    employeeProfile.setTitle(userDTO.getJobTitle());
+    // TODO: 3/10/2020 Implement Title of the employee
     user.setEmployee(employeeProfile);
 
     this.userRepository.saveAndFlush(user);
@@ -121,7 +118,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void setUserRole(String id, String role) {
+  public void setUserRole(Long id, String role) {
     User user = this.userRepository.findById(id)
                                    .orElseThrow(() ->
                                        new IllegalArgumentException(
@@ -162,6 +159,7 @@ public class UserServiceImpl implements UserService {
         break;
     }
 
-    this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
+    this.userRepository.saveAndFlush(
+        this.modelMapper.map(userServiceModel, User.class));
   }
 }

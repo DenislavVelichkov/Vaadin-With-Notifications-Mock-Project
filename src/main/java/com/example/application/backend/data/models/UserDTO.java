@@ -2,6 +2,8 @@ package com.example.application.backend.data.models;
 
 import java.util.Set;
 
+import com.example.application.backend.data.entity.Role;
+
 public class UserDTO {
 
   private String username;
@@ -9,6 +11,7 @@ public class UserDTO {
   private String lastName;
   private String password;
   private String email;
+  private String jobTitle;
   private Set<RoleDTO> authorities;
 
 
@@ -61,5 +64,13 @@ public class UserDTO {
 
   public void setAuthorities(Set<RoleDTO> authorities) {
     this.authorities = authorities;
+  }
+
+  public String getJobTitle() {
+    return this.jobTitle;
+  }
+
+  public void setJobTitle(String jobTitle) {
+    this.jobTitle = jobTitle;
   }
 }

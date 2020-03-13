@@ -1,16 +1,16 @@
 package com.example.application.backend.config.security;
 
 
-import com.example.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
@@ -24,11 +24,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private static final String LOGIN_SUCCESS_URL = "/home";
   private static final String LOGOUT_URL = "/logout";
 
-  private final UserService userService;
+  private final UserDetailsService userService;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public SecurityConfiguration(UserService userService,
+  public SecurityConfiguration(UserDetailsService userService,
                                PasswordEncoder passwordEncoder) {
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     super.configure(auth);
-    auth.userDetailsService(userService).passwordEncoder(this.passwordEncoder);
+    auth.userDetailsService(this.userService).passwordEncoder(this.passwordEncoder);
   }
 
   @Override
@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
         .authorizeRequests()
         .antMatchers("/login", "/register").permitAll()
+        .antMatchers("/VAADIN/**").permitAll()
         .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
         .anyRequest().authenticated()
         .and().formLogin()
@@ -55,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .passwordParameter("password")
         .loginPage(LOGIN_URL).permitAll()
         .loginProcessingUrl(LOGIN_PROCESSING_URL)
+        .defaultSuccessUrl(LOGIN_SUCCESS_URL)
         .successForwardUrl(LOGIN_SUCCESS_URL)
         .failureUrl(LOGIN_FAILURE_URL)
         .and().logout().logoutUrl(LOGOUT_URL)
@@ -64,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers(
-        "/VAADIN/**",
+
         "/favicon.ico",
         "/robots.txt",
         "/manifest.webmanifest",
@@ -73,6 +75,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         "/frontend/**",
         "/webjars/**",
         "/frontend-es5/**", "/frontend-es6/**");
+  }
+
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
   }
 
 }

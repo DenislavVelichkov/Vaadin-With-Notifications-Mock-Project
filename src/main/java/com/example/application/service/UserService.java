@@ -15,5 +15,5 @@ public interface UserService extends UserDetailsService {
 
   List<UserDTO> findAllUsers();
 
-  void setUserRole(String id, String role);
+  void setUserRole(Long id, String role);
 }

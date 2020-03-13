@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class AuthenticatedUserServiceImpl implements AuthenticatedUserService {
   @Override
   public String getUsername() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication =
+        SecurityContextHolder.getContext().getAuthentication();
     return authentication.getName();
   }
 

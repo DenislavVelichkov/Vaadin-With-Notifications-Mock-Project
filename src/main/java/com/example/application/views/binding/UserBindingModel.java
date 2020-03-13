@@ -4,6 +4,7 @@ public class UserBindingModel {
   private String firstName;
   private String lastName;
   private String password;
+  private String confirmPassword;
   private String email;
   private String jobTitle;
 
@@ -32,6 +33,14 @@ public class UserBindingModel {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getConfirmPassword() {
+    return this.confirmPassword;
+  }
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
   }
 
   public String getEmail() {

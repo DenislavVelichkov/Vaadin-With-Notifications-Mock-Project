@@ -5,20 +5,21 @@ import com.example.application.service.UserService;
 import com.example.application.views.binding.UserBindingModel;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "register")
+@Route(value = "register", layout = MainLayout.class)
 @PageTitle("Register")
-@ParentLayout(MainLayout.class)
-public class RegisterView extends FlexLayout {
+public class RegisterView extends FlexLayout{
   private final UserService userService;
   private final ModelMapper modelMapper;
+
+  private Div container;
 
   @Autowired
   public RegisterView(UserService userService,
@@ -26,38 +27,52 @@ public class RegisterView extends FlexLayout {
     this.userService = userService;
     this.modelMapper = modelMapper;
 
+    this.initViewStructure();
+  }
+
+  private void initViewStructure() {
+    container = new Div();
+    container.setClassName("register-form-container");
+
     FormLayout registerForm = new FormLayout();
+
     TextField email = new TextField();
-    email.setTitle("email");
+    email.setLabel("email");
     TextField password = new TextField();
-    password.setTitle("password");
+    password.setLabel("Password");
+    TextField confirmPassword = new TextField();
+    confirmPassword.setLabel("Confirm Password");
     TextField jobTitle = new TextField();
-    jobTitle.setTitle("job title");
+    jobTitle.setLabel("Job title");
     TextField firstName = new TextField();
-    jobTitle.setTitle("First name");
+    firstName.setLabel("First name");
     TextField lastName = new TextField();
-    jobTitle.setTitle("Last name");
+    lastName.setLabel("Last name");
+
     registerForm.add(email);
     registerForm.add(password);
+    registerForm.add(confirmPassword);
     registerForm.add(jobTitle);
     registerForm.add(firstName);
     registerForm.add(lastName);
+
     Button registerButton = new Button("Register");
     registerForm.add(registerButton);
 
     registerButton.addClickListener(event -> {
-      UserBindingModel userDTO = new UserBindingModel();
-      userDTO.setPassword(password.getValue());
-      userDTO.setEmail(email.getValue());
-      userDTO.setFirstName(firstName.getValue());
-      userDTO.setLastName(lastName.getValue());
-      userDTO.setJobTitle(jobTitle.getValue());
+      UserBindingModel bindingModel = new UserBindingModel();
+      bindingModel.setPassword(password.getValue());
+      bindingModel.setEmail(email.getValue());
+      bindingModel.setFirstName(firstName.getValue());
+      bindingModel.setLastName(lastName.getValue());
+      bindingModel.setJobTitle(jobTitle.getValue());
 
       this.userService.registerUser(
-          this.modelMapper.map(userDTO, UserDTO.class));
+          this.modelMapper.map(bindingModel, UserDTO.class));
     });
 
-    this.add(registerForm);
+    container.add(registerForm);
+    this.add(container);
   }
 
 }
