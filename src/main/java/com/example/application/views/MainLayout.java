@@ -7,11 +7,9 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class MainLayout extends FlexLayout implements BeforeEnterObserver,
-    RouterLayout {
+public class MainLayout extends FlexLayout implements BeforeEnterObserver, RouterLayout {
 
   public MainLayout(){
   }
