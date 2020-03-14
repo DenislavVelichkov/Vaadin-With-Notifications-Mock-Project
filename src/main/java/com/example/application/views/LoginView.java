@@ -19,7 +19,6 @@ public class LoginView extends FlexLayout implements AfterNavigationObserver {
 
   private final LoginOverlay login;
 
-  @Autowired
   public LoginView() {
     this.login = new LoginOverlay();
 
@@ -28,9 +27,9 @@ public class LoginView extends FlexLayout implements AfterNavigationObserver {
 
   private void initLoginStructure() {
 
-    login.setForgotPasswordButtonVisible(false);
-    login.setAction("login");
-    login.setDescription("Please register if you don't have an account");
+    this.login.setForgotPasswordButtonVisible(false);
+    this.login.setAction("login");
+    this.login.setDescription("Please register if you don't have an account");
 
     Button registerBtn = new Button("Register");
     registerBtn.addClickListener(event -> {
@@ -39,20 +38,20 @@ public class LoginView extends FlexLayout implements AfterNavigationObserver {
     registerBtn.getStyle().set("background", "green");
     registerBtn.getStyle().set("color", "white");
 
-    login.setTitle(registerBtn);
+    this.login.setTitle(registerBtn);
 
-    add(login);
+    this.add(login);
   }
 
   @Override
   protected void onAttach(AttachEvent attachEvent) {
     super.onAttach(attachEvent);
-    login.setOpened(true);
+    this.login.setOpened(true);
   }
 
   @Override
   public void afterNavigation(AfterNavigationEvent event) {
-    login.setError(
+    this.login.setError(
         event.getLocation().getQueryParameters().getParameters().containsKey(
             "error"));
   }
