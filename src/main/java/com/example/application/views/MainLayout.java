@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
 public class MainLayout extends FlexLayout implements BeforeEnterObserver,
                                                       RouterLayout,
                                                       AfterNavigationObserver {
-  private static final Logger log =
-      LoggerFactory.getLogger(MainLayout.class);
+  private static final Logger log = LoggerFactory.getLogger(MainLayout.class);
 
 
   public MainLayout(){

@@ -6,6 +6,7 @@ import com.example.application.views.binding.UserBindingModel;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -19,20 +20,23 @@ public class RegisterView extends FlexLayout{
   private final UserService userService;
   private final ModelMapper modelMapper;
 
-  private Div container;
+  private final Div container;
 
   @Autowired
   public RegisterView(UserService userService,
                       ModelMapper modelMapper) {
     this.userService = userService;
     this.modelMapper = modelMapper;
+    container = new Div();
 
     this.initViewStructure();
   }
 
   private void initViewStructure() {
-    container = new Div();
+    this.setAlignSelf(Alignment.CENTER);
     container.setClassName("register-form-container");
+    container.add(new H4("Please register if you want to use this awesome app (:"));
+    container.setSizeFull();
 
     FormLayout registerForm = new FormLayout();
 
