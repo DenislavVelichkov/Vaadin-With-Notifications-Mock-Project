@@ -20,14 +20,14 @@ public class RegisterView extends FlexLayout{
   private final UserService userService;
   private final ModelMapper modelMapper;
 
-  private final Div container;
+  private final FlexLayout container;
 
   @Autowired
   public RegisterView(UserService userService,
                       ModelMapper modelMapper) {
     this.userService = userService;
     this.modelMapper = modelMapper;
-    container = new Div();
+    container = new FlexLayout();
 
     this.initViewStructure();
   }
@@ -37,8 +37,13 @@ public class RegisterView extends FlexLayout{
     container.setClassName("register-form-container");
     container.add(new H4("Please register if you want to use this awesome app (:"));
     container.setSizeFull();
+    container.getElement().getStyle().set("align-content", "center");
+    container.getElement().getStyle().set("text-align", "center");
+    container.getElement().getStyle().set("margin", "0 3rem 0");
 
     FormLayout registerForm = new FormLayout();
+    registerForm.getElement().getStyle().set("display", "flex");
+    registerForm.getElement().getStyle().set("flex", "100% 0 0");
 
     TextField email = new TextField();
     email.setLabel("email");

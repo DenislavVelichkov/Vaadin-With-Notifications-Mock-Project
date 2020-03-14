@@ -3,6 +3,7 @@ package com.example.application.views;
 import java.nio.file.AccessDeniedException;
 
 import com.example.application.backend.config.security.SecurityUtils;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.*;
@@ -18,6 +19,8 @@ public class MainLayout extends FlexLayout implements BeforeEnterObserver,
 
 
   public MainLayout(){
+
+
     VaadinSession.getCurrent()
                  .setErrorHandler((ErrorHandler) errorEvent -> {
                    log.error("Uncaught UI exception",

@@ -1,0 +1,53 @@
+:root {
+    /*Font Size*/
+    --sizing-font-size-phone: 12px/1.5;
+    --sizing-font-size-tablet: 14px/1.5;
+    --sizing-font-size-laptop: 16px/1.5;
+    --sizing-font-size-desktop: 18px/1.5;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Helvetica Mon ", Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 575.98px) {
+    html {
+        font-size: var(--sizing-font-size-phone);
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    html {
+        font-size: var(--sizing-font-size-phone);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    html {
+        font-size: var(--sizing-font-size-tablet);
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    html {
+        font-size: var(--sizing-font-size-laptop);
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: var(--sizing-font-size-desktop);
+    }
+}
