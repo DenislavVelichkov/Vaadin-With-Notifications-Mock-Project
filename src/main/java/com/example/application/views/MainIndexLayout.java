@@ -3,22 +3,21 @@ package com.example.application.views;
 import java.nio.file.AccessDeniedException;
 
 import com.example.application.backend.config.security.SecurityUtils;
-import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainLayout extends FlexLayout implements BeforeEnterObserver,
-                                                      RouterLayout,
-                                                      AfterNavigationObserver {
-  private static final Logger log = LoggerFactory.getLogger(MainLayout.class);
+public class MainIndexLayout extends AppLayout implements BeforeEnterObserver,
+                                                          RouterLayout,
+                                                          AfterNavigationObserver {
+  private static final Logger log = LoggerFactory.getLogger(MainIndexLayout.class);
 
 
-  public MainLayout(){
+  public MainIndexLayout(){
 
 
     VaadinSession.getCurrent()

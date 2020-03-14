@@ -2,8 +2,6 @@ package com.example.application.backend.data.models;
 
 import java.util.Set;
 
-import com.example.application.backend.data.entity.Role;
-
 public class UserDTO {
 
   private String username;

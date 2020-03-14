@@ -1,9 +1,7 @@
 package com.example.application.service;
 
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.application.backend.common.Authorities;
@@ -14,8 +12,6 @@ import com.example.application.backend.data.models.UserDTO;
 import com.example.application.backend.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
