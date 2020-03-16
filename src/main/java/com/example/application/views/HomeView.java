@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.server.VaadinSession;
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.security.core.context.SecurityContext;
 
@@ -20,8 +21,8 @@ public class HomeView extends FlexLayout {
     Button logout = new Button("Logout");
     logout.addClickListener(event -> {
 
+      VaadinSession.getCurrent().getSession().invalidate();
       UI.getCurrent().getPage().executeJs("window.location.href='/logout'");
-      UI.getCurrent().getSession().close();
 
     });
 
