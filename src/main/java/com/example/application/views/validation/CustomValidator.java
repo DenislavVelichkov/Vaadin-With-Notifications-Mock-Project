@@ -4,15 +4,10 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import com.vaadin.flow.data.binder.ValidationResult;
+import com.vaadin.flow.data.binder.Validator;
 import com.vaadin.flow.data.binder.ValueContext;
-import com.vaadin.flow.data.validator.AbstractValidator;
-import com.vaadin.flow.data.validator.EmailValidator;
 
-public class CustomValidator extends AbstractValidator<String> {
-
-  protected CustomValidator(String errorMessage) {
-    super(errorMessage);
-  }
+public class CustomValidator implements Validator<String> {
 
   @Override
   public ValidationResult apply(String s, ValueContext valueContext) {
