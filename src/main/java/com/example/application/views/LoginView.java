@@ -26,7 +26,6 @@ public class LoginView extends FlexLayout implements AfterNavigationObserver {
   }
 
   private void initLoginStructure() {
-
     this.login.setForgotPasswordButtonVisible(false);
     this.login.setAction("login");
     this.login.setDescription("Please register if you don't have an account");
@@ -35,6 +34,7 @@ public class LoginView extends FlexLayout implements AfterNavigationObserver {
     registerBtn.addClickListener(event -> {
       UI.getCurrent().navigate(RegisterView.ROUTE);
     });
+
     registerBtn.getStyle().set("background", "green");
     registerBtn.getStyle().set("color", "white");
 

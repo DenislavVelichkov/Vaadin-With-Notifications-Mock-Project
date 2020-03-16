@@ -10,12 +10,15 @@ import com.vaadin.flow.router.RouteAlias;
 @Route(value = "home", layout = MainIndexLayout.class)
 @RouteAlias(value = "")
 public class HomeView extends FlexLayout {
+
   public HomeView() {
     add(new H4("HOME WOOOORKS !"));
-    Button logout = new Button();
+
+    Button logout = new Button("Logout");
     logout.addClickListener(event -> {
       UI.getCurrent().navigate("/logout");
     });
+
     this.add(logout);
   }
 }
